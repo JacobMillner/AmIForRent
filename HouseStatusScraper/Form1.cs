@@ -55,6 +55,8 @@ namespace HouseStatusScraper
 			Realtor scraper = new Realtor();
 			scraper.Progress = progress;
 			scraper.Start();
+
+			DatabaseUtils.UpdateScraperStats();
 		}
 
 		/// <summary>

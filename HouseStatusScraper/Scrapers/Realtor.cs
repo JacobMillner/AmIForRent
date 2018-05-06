@@ -75,42 +75,14 @@ namespace HouseStatusScraper.Scrapers
 		{
 			// open our db connection
 			SQLiteConnection database = DatabaseUtils.ConnectToDatabase();
-			string currentDate = DateTime.Now.ToString();
-			int totalScrapes = 1;
-
-			ScraperStats stats = database.Query<ScraperStats>("SELECT * FROM ScraperStats ORDER BY LastScrapeDate").FirstOrDefault();
-			if (stats != null)
-			{
-				//check the stats and remove the old entry
-				totalScrapes = stats.TotalScrapes;
-				database.Execute("DELETE FROM ScraperStats");
-			}
-
-			StringBuilder insertSBSiteData = new StringBuilder();
-			insertSBSiteData.Append("INSERT INTO SiteData VALUES ({WebsiteName}, {Status}, {Date}, {HTML})");
-			insertSBSiteData
-				.Replace("{WebsiteName}", WebsiteName)
-				.Replace("{Status}", Status.ToString())
-				.Replace("{Date}", currentDate)
-				.Replace("HTML", PageHTML);
-			string insertSQL = insertSBSiteData.ToString();
 
 			// insert our new stats record
-			ScraperStats newStats = new ScraperStats();
-			newStats.LastScrapeDate = DateTime.Now;
-			newStats.TotalScrapes = totalScrapes;
-			database.Execute("INSERT INTO ScraperStats VALUES (@LastScrapeDate, @TotalScrapes)", newStats);
-
-			//// create the db command and run it
-			//SQLiteCommand insertCommand = new SQLiteCommand(insertSQL, database);
-			//insertCommand.ExecuteNonQuery();
-
-			////write our scraper stats log
-			//StringBuilder insertSBScraperStats = new StringBuilder();
-			//insertSBScraperStats.Append("INSERT INTO ScraperStats VALUES ({LastScrapeDate}, {TotalScrapes})");
-			//insertSBScraperStats
-			//	.Replace("{LastScrapeDate}", currentDate)
-			//	.Replace("{TotalScrapes}", totalScrapes.ToString());
+			SiteData newSiteData = new SiteData();
+			newSiteData.WebsiteName = WebsiteName;
+			newSiteData.Status = Status.ToString();
+			newSiteData.Date = DateTime.Now;
+			newSiteData.HTML = PageHTML;
+			database.Execute("INSERT INTO SiteData (WebsiteName, Status, Date, HTML) VALUES (@WebsiteName, @Status, @Date, @HTML)", newSiteData);
 
 			// close our db connection
 			database.Close();
