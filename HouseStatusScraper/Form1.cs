@@ -72,8 +72,13 @@ namespace HouseStatusScraper
 			scraper.Progress = progress;
 			scraper.Start();
 
-			// update our scraper stats and change the labels
-			DatabaseUtils.UpdateScraperStats();
+            setCurLoadingTextSafe("redfin.com...");
+            Redfin scraperRedfin = new Redfin();
+            scraperRedfin.Progress = progress;
+            scraperRedfin.Start();
+
+            // update our scraper stats and change the labels
+            DatabaseUtils.UpdateScraperStats();
 			updateScraperStatsLabels();
 		}
 

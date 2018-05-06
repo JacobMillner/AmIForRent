@@ -13,5 +13,10 @@ namespace HouseStatusScraper.Enums
 		ForRent,
 		Sold,
 		ForSaleActive,
+        AcceptBackupOffers,
+        Active,
+        ComingSoon,
+        Foreclose,
+        ActivePending
 	}
 }
