@@ -44,18 +44,30 @@ namespace HouseStatusScraper.Scrapers
 				if (line.Contains("Off Market"))
 				{
 					Status = HouseStatus.OffMarket;
+					if (Progress != null)
+						Progress.Report(totalLines * 100 / totalLines);
+					break;
 				}
 				if (line.Contains("Apartment For Rent"))				
 				{
 					Status = HouseStatus.ForRent;
+					if (Progress != null)
+						Progress.Report(totalLines * 100 / totalLines);
+					break;
 				}
 				if (line.Contains("Single Family For Rent"))
 				{
 					Status = HouseStatus.ForRent;
+					if (Progress != null)
+						Progress.Report(totalLines * 100 / totalLines);
+					break;
 				}
 				if (line.Contains("For Sale - Active"))
 				{
 					Status = HouseStatus.ForSaleActive;
+					if (Progress != null)
+						Progress.Report(totalLines * 100 / totalLines);
+					break;
 				}
 				i++;
 			}
@@ -67,7 +79,7 @@ namespace HouseStatusScraper.Scrapers
 			}
 			else
 			{
-				// log an error
+				// TODO log an error
 			}
 		}
 
