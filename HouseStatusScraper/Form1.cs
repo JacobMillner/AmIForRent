@@ -77,6 +77,11 @@ namespace HouseStatusScraper
             scraperRedfin.Progress = progress;
             scraperRedfin.Start();
 
+            setCurLoadingTextSafe("sibcycline.com...");
+            SibcyCline scraperSibcycline = new SibcyCline();
+            scraperSibcycline.Progress = progress;
+            scraperSibcycline.Start();
+
             // update our scraper stats and change the labels
             DatabaseUtils.UpdateScraperStats();
 			updateScraperStatsLabels();

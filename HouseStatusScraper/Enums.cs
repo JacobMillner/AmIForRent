@@ -17,6 +17,8 @@ namespace HouseStatusScraper.Enums
         Active,
         ComingSoon,
         Foreclose,
-        ActivePending
+        ActivePending,
+        SalePending,
+        LandLot
 	}
 }
