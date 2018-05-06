@@ -33,6 +33,7 @@
 			this.btnReport = new System.Windows.Forms.Button();
 			this.progressBar1 = new System.Windows.Forms.ProgressBar();
 			this.CurLoading = new System.Windows.Forms.Label();
+			this.TotalScraptes = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// btnScrape
@@ -80,11 +81,21 @@
 			this.CurLoading.Text = "---";
 			this.CurLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// TotalScraptes
+			// 
+			this.TotalScraptes.AutoSize = true;
+			this.TotalScraptes.Location = new System.Drawing.Point(12, 50);
+			this.TotalScraptes.Name = "TotalScraptes";
+			this.TotalScraptes.Size = new System.Drawing.Size(85, 13);
+			this.TotalScraptes.TabIndex = 5;
+			this.TotalScraptes.Text = "Total Scrapes: 0";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(303, 263);
+			this.Controls.Add(this.TotalScraptes);
 			this.Controls.Add(this.CurLoading);
 			this.Controls.Add(this.progressBar1);
 			this.Controls.Add(this.btnReport);
@@ -104,6 +115,7 @@
 		private System.Windows.Forms.Button btnReport;
 		private System.Windows.Forms.ProgressBar progressBar1;
 		private System.Windows.Forms.Label CurLoading;
+		private System.Windows.Forms.Label TotalScraptes;
 	}
 }
 

@@ -1,4 +1,6 @@
-﻿using HouseStatusScraper.Scrapers;
+﻿using Dapper;
+using HouseStatusScraper.Data;
+using HouseStatusScraper.Scrapers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +19,8 @@ namespace HouseStatusScraper
 	public partial class Form1 : Form
 	{
 		private string address { get; set; }
+		private DateTime lastScrapeDate { get; set; }
+		private int numOfScrapes { get; set; }
 
 		public Form1()
 		{
@@ -26,8 +30,20 @@ namespace HouseStatusScraper
 			FileStream userSettingsFileStream = new FileStream("UserSettings.xml", FileMode.Open);
 			UserSettings settings = (UserSettings)mySerializer.Deserialize(userSettingsFileStream);
 			userSettingsFileStream.Close();
-
 			address = settings.Address;
+
+			// set the last scrape label
+			SQLiteConnection database = DatabaseUtils.ConnectToDatabase();
+			ScraperStats stats = database.Query<ScraperStats>("SELECT * FROM ScraperStats ORDER BY LastScrapeDate").FirstOrDefault();
+			if (stats != null)
+			{
+				// if we have stats - update the labels
+				numOfScrapes = stats.TotalScrapes;
+				lastScrapeDate = stats.LastScrapeDate;
+				LastRunDate.Text = "Last Scrape Date: " + lastScrapeDate.ToShortDateString();
+				TotalScraptes.Text = "Total Scrapes: " + numOfScrapes.ToString();
+			}
+			database.Close();
 		}
 
 		private async void btnScrape_Click(object sender, EventArgs e)
@@ -56,7 +72,9 @@ namespace HouseStatusScraper
 			scraper.Progress = progress;
 			scraper.Start();
 
+			// update our scraper stats and change the labels
 			DatabaseUtils.UpdateScraperStats();
+			updateScraperStatsLabels();
 		}
 
 		/// <summary>
@@ -68,6 +86,32 @@ namespace HouseStatusScraper
 			if (CurLoading.InvokeRequired)
 			{ CurLoading.Invoke(new Action(() => CurLoading.Text = txt)); return; }
 			CurLoading.Text = txt;
+		}
+
+		/// <summary>
+		/// Updates the Scraper Stats labels
+		/// </summary>
+		private void updateScraperStatsLabels()
+		{
+			SQLiteConnection database = DatabaseUtils.ConnectToDatabase();
+			ScraperStats stats = database.Query<ScraperStats>("SELECT * FROM ScraperStats ORDER BY LastScrapeDate").FirstOrDefault();
+			if (stats != null)
+			{
+				// if we have stats - update the labels
+				numOfScrapes = stats.TotalScrapes;
+				lastScrapeDate = stats.LastScrapeDate;
+
+				if (LastRunDate.InvokeRequired)
+				{ LastRunDate.Invoke(new Action(() => LastRunDate.Text = "Last Scrape Date: " + lastScrapeDate.ToShortDateString())); }
+				LastRunDate.Text = "Last Scrape Date: " + lastScrapeDate.ToShortDateString();
+
+				if (TotalScraptes.InvokeRequired)
+				{ TotalScraptes.Invoke(new Action(() => TotalScraptes.Text = "Total Scrapes: " + numOfScrapes.ToString())); }
+				TotalScraptes.Text = "Total Scrapes: " + numOfScrapes.ToString();
+			}
+
+			database.Close();
+			return;
 		}
 	}
 }
