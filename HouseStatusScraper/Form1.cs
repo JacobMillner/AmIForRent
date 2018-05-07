@@ -85,6 +85,12 @@ namespace HouseStatusScraper
             // update our scraper stats and change the labels
             DatabaseUtils.UpdateScraperStats();
 			updateScraperStatsLabels();
+
+			// reset the progress bar
+			if (progress != null)
+				progress.Report(0);
+			setCurLoadingTextSafe("---");
+			MessageBox.Show("Scrape Complete!");
 		}
 
 		/// <summary>
