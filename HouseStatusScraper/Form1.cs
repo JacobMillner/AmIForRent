@@ -123,5 +123,17 @@ namespace HouseStatusScraper
 			database.Close();
 			return;
 		}
+
+		private void btnReport_Click(object sender, EventArgs e)
+		{
+			FolderBrowserDialog fbd = new FolderBrowserDialog();
+			fbd.Description = "Select Report Export Folder";
+
+			if (fbd.ShowDialog() == DialogResult.OK)
+			{
+				string sSelectedPath = fbd.SelectedPath;
+				Report.ExecuteAndSaveReport(fbd.SelectedPath);
+			}
+		}
 	}
 }
