@@ -72,25 +72,90 @@ namespace HouseStatusScraper
 			scraper.Progress = progress;
 			scraper.Start();
 
-            setCurLoadingTextSafe("redfin.com...");
-            Redfin scraperRedfin = new Redfin();
-            scraperRedfin.Progress = progress;
-            scraperRedfin.Start();
+			setCurLoadingTextSafe("redfin.com...");
+			Redfin scraperRedfin = new Redfin();
+			scraperRedfin.Progress = progress;
+			scraperRedfin.Start();
 
-            setCurLoadingTextSafe("sibcycline.com...");
-            SibcyCline scraperSibcycline = new SibcyCline();
-            scraperSibcycline.Progress = progress;
-            scraperSibcycline.Start();
+			setCurLoadingTextSafe("sibcycline.com...");
+			SibcyCline scraperSibcycline = new SibcyCline();
+			scraperSibcycline.Progress = progress;
+			scraperSibcycline.Start();
 
-            // update our scraper stats and change the labels
-            DatabaseUtils.UpdateScraperStats();
+			setCurLoadingTextSafe("movoto.com...");
+			Movoto scraperMovoto = new Movoto();
+			scraperMovoto.Progress = progress;
+			scraperMovoto.Start();
+
+			setCurLoadingTextSafe("trulia.com...");
+			Trulia scraperTrulia = new Trulia();
+			scraperTrulia.Progress = progress;
+			scraperTrulia.Start();
+
+			setCurLoadingTextSafe("remax.com...");
+			Remax scraperRemax = new Remax();
+			scraperRemax.Progress = progress;
+			scraperRemax.Start();
+
+			// this site doesnt work
+			//setCurLoadingTextSafe("irongaterentals.com...");
+			//IronGateRealtors scraperIron = new IronGateRealtors();
+			//scraperIron.Progress = progress;
+			//scraperIron.Start();
+
+			// this site doesnt work
+			//setCurLoadingTextSafe("forsalebyowner.com...");
+			//ForSaleByOwner scraperFSBO = new ForSaleByOwner();
+			//scraperFSBO.Progress = progress;
+			//scraperFSBO.Start();
+
+			setCurLoadingTextSafe("hotpads.com...");
+			Hotpads scraperHotpads = new Hotpads();
+			scraperHotpads.Progress = progress;
+			scraperHotpads.Start();
+
+			setCurLoadingTextSafe("craigslist.com...");
+			Craigslist scraperCraigslist = new Craigslist();
+			scraperCraigslist.Progress = progress;
+			scraperCraigslist.Start();
+
+			setCurLoadingTextSafe("apartmentfinder.com...");
+			ApartmentFinder scraperApartmentFinder = new ApartmentFinder();
+			scraperApartmentFinder.Progress = progress;
+			scraperApartmentFinder.Start();
+
+			setCurLoadingTextSafe("apartmenthomeliving.com...");
+			ApartmentHomeLiving scraperApartmentLiving = new ApartmentHomeLiving();
+			scraperApartmentLiving.Progress = progress;
+			scraperApartmentLiving.Start();
+
+			setCurLoadingTextSafe("apartments.com...");
+			Apartments scraperApartments = new Apartments();
+			scraperApartments.Progress = progress;
+			scraperApartments.Start();
+
+			// update our scraper stats and change the labels
+			DatabaseUtils.UpdateScraperStats();
 			updateScraperStatsLabels();
 
 			// reset the progress bar
 			if (progress != null)
 				progress.Report(0);
 			setCurLoadingTextSafe("---");
-			MessageBox.Show("Scrape Complete!");
+			MessageBox.Show(@"Scrape Complete!" + "\n"
+				+ "----------------------" + "\n"
+				+ "hotpads.com: " + scraperHotpads.Status.ToString() + "\n"
+				+ "craigslist.com: " + scraperRedfin.Status.ToString() + "\n"
+				+ "sibcycline.com: " + scraperSibcycline.Status.ToString() + "\n"
+				+ "movoto.com: " + scraperMovoto.Status.ToString() + "\n"
+				+ "trulia.com: " + scraperTrulia.Status.ToString() + "\n"
+				+ "remax.com: " + scraperRemax.Status.ToString() + "\n"
+				+ "hotpads.com: " + scraperHotpads.Status.ToString() + "\n"
+				+ "craigslist.com: " + scraperCraigslist.Status.ToString() + "\n"
+				+ "apartmentfinder.com: " + scraperApartmentFinder.Status.ToString() + "\n"
+				+ "apartmenthomeliving.com: " + scraperApartmentLiving.Status.ToString() + "\n"
+				+ "apartments.com: " + scraperApartments.Status.ToString() + "\n"
+				);
 		}
 
 		/// <summary>

@@ -19,6 +19,9 @@ namespace HouseStatusScraper.Enums
         Foreclose,
         ActivePending,
         SalePending,
-        LandLot
+        LandLot,
+		Foreclosure,
+		ForRentOrSale,
+		NotListed,
 	}
 }
